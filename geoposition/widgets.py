@@ -12,19 +12,21 @@ from .conf import settings
 class GeopositionWidget(forms.MultiWidget):
     template_name = 'geoposition/widgets/geoposition.html'
 
-    def __init__(self, attrs=None):
+    def __init__(self, field_name=None, attrs=None):
+        self.field_name = field_name
         widgets = (
             forms.TextInput(),
             forms.TextInput(),
         )
         super(GeopositionWidget, self).__init__(widgets, attrs)
-        
+
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         if not isinstance(value, list):
             value = self.decompress(value)
 
         context['widget'] = {
+            'field_name': self.field_name,
             'latitude': {
                 'html': value[0],
                 'label': _("latitude"),
@@ -47,7 +49,6 @@ class GeopositionWidget(forms.MultiWidget):
         if value:
             return [value.latitude, value.longitude]
         return [None, None]
-
 
     class Media:
         extra = '' if django_settings.DEBUG else '.min'
