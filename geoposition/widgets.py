@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import json
 from django import forms
+from django.conf import settings as django_settings
 from django.template.loader import render_to_string
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
@@ -49,7 +50,9 @@ class GeopositionWidget(forms.MultiWidget):
 
 
     class Media:
+        extra = '' if django_settings.DEBUG else '.min'
         js = (
+            'admin/js/vendor/jquery/jquery{extra}.js'.format(extra=extra),
             '//maps.google.com/maps/api/js?key=%s' % settings.GOOGLE_MAPS_API_KEY,
             'geoposition/geoposition.js',
         )
