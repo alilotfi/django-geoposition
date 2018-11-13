@@ -12,8 +12,7 @@ from .conf import settings
 class GeopositionWidget(forms.MultiWidget):
     template_name = 'geoposition/widgets/geoposition.html'
 
-    def __init__(self, field_name=None, attrs=None):
-        self.field_name = field_name
+    def __init__(self, attrs=None):
         widgets = (
             forms.TextInput(),
             forms.TextInput(),
@@ -25,8 +24,7 @@ class GeopositionWidget(forms.MultiWidget):
         if not isinstance(value, list):
             value = self.decompress(value)
 
-        context['widget'] = {
-            'field_name': self.field_name,
+        context['widget'].update({
             'latitude': {
                 'html': value[0],
                 'label': _("latitude"),
@@ -40,7 +38,7 @@ class GeopositionWidget(forms.MultiWidget):
                 'map_options': json.dumps(settings.MAP_OPTIONS),
                 'marker_options': json.dumps(settings.MARKER_OPTIONS),
             }
-        }
+        })
         return context
 
     def decompress(self, value):

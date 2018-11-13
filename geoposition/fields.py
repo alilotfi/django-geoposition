@@ -52,8 +52,7 @@ class GeopositionField(models.Field):
 
     def formfield(self, **kwargs):
         defaults = {
-            'form_class': GeopositionFormField,
-            'field_name': self.name,
+            'form_class': GeopositionFormField
         }
         defaults.update(kwargs)
         return super(GeopositionField, self).formfield(**defaults)
