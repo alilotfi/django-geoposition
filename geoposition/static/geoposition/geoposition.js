@@ -149,9 +149,6 @@ if (jQuery != undefined) {
                 $longitudeField.val(this.position.lng());
                 doGeocode();
             });
-            if ($latitudeField.val() && $longitudeField.val()) {
-                google.maps.event.trigger(marker, 'dragend');
-            }
 
             $latitudeField.add($longitudeField).bind('keyup', function(e) {
                 var latitude = parseFloat($latitudeField.val()) || 0;
