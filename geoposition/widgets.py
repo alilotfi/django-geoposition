@@ -46,7 +46,7 @@ class GeopositionWidget(forms.MultiWidget):
             return value.rsplit(',')
         if value:
             return [value.latitude, value.longitude]
-        return [None, None]
+        return ['', '']
 
     class Media:
         extra = '' if django_settings.DEBUG else '.min'
